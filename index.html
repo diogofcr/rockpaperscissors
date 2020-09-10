@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Rock Paper Scissors</title>
+  <style>
+  </style>
+</head>
+<body>
+  <script>
+    
+    function game() {
+      let scorePlayer = 0; //Both players start with 0 score
+      let scoreComputer = 0; //Both players start with 0 score
+      let result; //Round result
+      
+      for (let i = 0; i < 5; i++) {  //Plays the game 5 times
+        let playerSelection = prompt(`Choose your play (rock, paper or scissors). ${(5-i)} plays left`,"");
+        if (playerSelection === null) {  //If the user cancels the prompt
+          console.log(`Giving up is not an option!`);
+          return;
+        }
+        playerSelection = playerSelection.toLowerCase();  //Transforms the selection to lower case so it is not case sensitive
+        if (playerSelection != "rock" && playerSelection != "paper" && playerSelection != "scissors") {  //If the user doesn't answer rock paper os scissors it prompts again
+          console.log(`${playerSelection} is not a play. Try again!`);
+          i -= 1;
+          continue;
+        }
+        let computerSelection = computerPlay();
+        console.log(playRound(playerSelection, computerSelection))
+      }
+
+      
+      function computerPlay() {
+        let choices = ["rock","paper","scissors"];// rock,paper  ,scissor
+        let random = Math.floor(Math.random() * choices.length);
+        let play = choices[random];// randomly choose one
+        return play;// return this value
+      }
+
+      function playRound(playerSelection, computerSelection) {
+          if (playerSelection === computerSelection) {
+            result = "Round tie! You played the same thing";
+            return result;
+          } else if (playerSelection === "rock") { // Player chooses rock
+            if (computerSelection === "paper") { 
+              result = "You Lose this round! Paper beats Rock";
+              scoreComputer == ++scoreComputer
+              return result;
+            } else if (computerSelection == "scissors") {
+              result = "You Win this round! Rock crushes scissor";
+              scorePlayer == ++scorePlayer
+              return result;
+            }
+          } else if (playerSelection === "paper") { // Player chooses paper
+            if (computerSelection === "rock") {
+              result = "You Win this round! Paper beats Rock";
+              scorePlayer == ++scorePlayer
+              return result;
+            } else if (computerSelection == "scissors") {
+              result = "You Lose this round! Scissors cuts paper";
+              scoreComputer == ++scoreComputer
+              return result;
+            }
+          } else if (playerSelection === "scissors") { // Player chooses scissors
+            if (computerSelection === "rock") {
+              result = "You Lose this round! Rock crushes scissor";
+              scoreComputer == ++scoreComputer
+              return result;
+            } else if (computerSelection == "paper") {
+              result = "You Win this round! Scissors cuts paper";
+              scorePlayer == ++scorePlayer
+              return result;
+            }
+          }
+      }
+      
+      if (scorePlayer > scoreComputer) { // Final game result
+        return (`You Win the game! You scored: ${scorePlayer} Computer scored: ${scoreComputer}`)
+      } else if (scorePlayer < scoreComputer) {
+        return (`You Lose the game! You scored: ${scorePlayer} Computer scored: ${scoreComputer}`)
+      } else {
+        return (`Tie! You scored: ${scorePlayer} Computer scored: ${scoreComputer}`)
+      }
+    }
+
+  </script>
+</body>
+</html>
