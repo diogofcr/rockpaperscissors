@@ -17,8 +17,7 @@
       for (let i = 0; i < 5; i++) {  //Plays the game 5 times
         let playerSelection = prompt(`Choose your play (rock, paper or scissors). ${(5-i)} plays left`,"");
         if (playerSelection === null) {  //If the user cancels the prompt
-          console.log(`Giving up is not an option!`);
-          return;
+          return (`Giving up is not an option!`);
         }
         playerSelection = playerSelection.toLowerCase();  //Transforms the selection to lower case so it is not case sensitive
         if (playerSelection != "rock" && playerSelection != "paper" && playerSelection != "scissors") {  //If the user doesn't answer rock paper os scissors it prompts again
