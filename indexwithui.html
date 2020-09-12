@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Rock Paper Scissors</title>
+  <style>
+      *{
+          margin: 0;
+          padding: 0;
+      }
+
+      #bg-image {
+        background-color: #8BC6EC;
+        background-image: linear-gradient(135deg, #8BC6EC 0%, #9599E2 100%);
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        z-index: -1;
+        background-size: cover;
+      }
+
+      main {
+            text-align: center;
+            width: 100%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+      #game {
+        height: 30%;
+        width: 40%;
+        margin: auto;
+        border-style: solid;
+        border-color:#006880;
+        background-color:	rgba(149,153,226,0.4);
+      }
+      #choices {
+        padding: 6px;
+      }
+      button {
+        margin: 4px;
+        padding: 4px;
+      }
+      h1, h2 {
+        padding: 5px;
+        margin: 10px;
+      }
+  </style>
+</head>
+<body>
+  <div id="bg-image"></div>
+  <main>
+    <div id="game">
+      <h1></h1>
+      <h2 id="resultd"></h2>
+      <div id="scores">
+      <p></p>
+      <p></p>
+      </div>
+      <div id="choices">
+      <button id="rock">Rock</button>
+      <button id="paper">Paper</button>
+      <button id="scissors">Scissors</button>
+      </div>
+      <h2 id="over"></h2>
+    </div>
+  </main>
+  <script>
+    let scorePlayer = 0; //Both players start with 0 score
+    let scoreComputer = 0; //Both players start with 0 score
+
+    const scorediv = document.querySelector('#scores');
+    scorediv.firstElementChild.textContent = `Player score: ${scorePlayer}`;
+    scorediv.lastElementChild.textContent = `Computer score: ${scoreComputer}`;
+    
+    const resultlog = document.querySelector('h1');
+    const resultdescription = document.querySelector('#resultd');
+    const over = document.querySelector('#over');
+
+
+    // buttons is a node list. It looks and acts much like an array.
+    const buttons = document.querySelectorAll('button');
+
+    // we use the .forEach method to iterate through each button
+    buttons.forEach((button) => {
+
+    // and for each one we add a 'click' listener
+    button.addEventListener('click', () => {
+        game(button.id);
+    });
+    });
+    
+    function game(playerSelection) {
+      if (scoreComputer === 5 || scorePlayer ===5) {
+        return;
+      }
+      let result; //Round result
+      let resultdesc;
+      let computerSelection = computerPlay();
+      playRound(playerSelection, computerSelection)
+      
+
+      
+      function computerPlay() {
+        let choices = ["rock","paper","scissors"];// rock,paper  ,scissor
+        let random = Math.floor(Math.random() * choices.length);
+        let play = choices[random];// randomly choose one
+        return play;// return this value
+      }
+
+      function playRound(playerSelection, computerSelection) {
+          if (playerSelection === computerSelection) {
+            result = "Round tie!";
+            resultdesc = "You played the same thing";
+            return result;
+          } else if (playerSelection === "rock") { // Player chooses rock
+            if (computerSelection === "paper") {
+              result = "You Lose this round!";
+              resultdesc = "Paper beats Rock";
+              scoreComputer == ++scoreComputer
+              return result;
+            } else if (computerSelection == "scissors") {
+              result = "You Win this round!";
+              resultdesc = "Rock crushes scissor";
+              scorePlayer == ++scorePlayer
+              return result;
+            }
+          } else if (playerSelection === "paper") { // Player chooses paper
+            if (computerSelection === "rock") {
+              result = "You Win this round!";
+              resultdesc = "Paper beats Rock";
+              scorePlayer == ++scorePlayer
+              return result;
+            } else if (computerSelection == "scissors") {
+              result = "You Lose this round!";
+              resultdesc = "Scissors cuts paper";
+              scoreComputer == ++scoreComputer
+              return result;
+            }
+          } else if (playerSelection === "scissors") { // Player chooses scissors
+            if (computerSelection === "rock") {
+              result = "You Lose this round!";
+              resultdesc = "Rock crushes scissor";
+              scoreComputer == ++scoreComputer
+              return result;
+            } else if (computerSelection == "paper") {
+              result = "You Win this round!";
+              resultdesc = "Scissors cuts paper";
+              scorePlayer == ++scorePlayer
+              return result;
+            }
+          }
+      }
+      
+      if (scorePlayer === 5) {
+        result = `You Win the game!`;
+        over.textContent = `The game is over, refresh the page!`;
+      } else if (scoreComputer === 5) {
+        result = `You Lose the game!`;
+        over.textContent = `The game is over, refresh the page!`;
+      }
+
+      scorediv.firstElementChild.textContent = `Player score: ${scorePlayer}`;
+      scorediv.lastElementChild.textContent = `Computer score: ${scoreComputer}`;
+      resultlog.textContent = result;
+      resultdescription.textContent = resultdesc;
+      
+    }
+
+  </script>
+</body>
+</html>
